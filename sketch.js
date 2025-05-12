@@ -14,7 +14,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  imageMode(CORNER);
+  imageMode(CENTER);
   for (let x = 0; x <= width; x += 60) {
   wavePoints.push({ x: x, y: height * 0.8 });}
   for (let i = 0; i < width; i += 40) {
@@ -40,7 +40,7 @@ function draw() {
   }
   pop();
   }
-  
+}
 
   // 로고 위치
   let imgX = width / 2;
@@ -221,3 +221,4 @@ function drawClockHands(x, y, radius) {
 
   pop();
 }
+
