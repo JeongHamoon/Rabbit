@@ -29,15 +29,6 @@ function draw() {
   drawLightGrid(); // 🔴 마우스 반응 빛 배경
   drawResponsiveCurve(); // 💫 부드러운 배경 곡선
   tint(255, 40); // 투명도 조절 (0~255)
-     // 3) 오른손 시계 오프셋
-  const clockOffsetX = 143;
-  const clockOffsetY = 65;
-  const clockRadius = 30;
-   drawClockHands(
-    imgX + clockOffsetX,
-    imgY + clockOffsetY,
-    clockRadius
-  );
   image(bgImg, width / 2, height / 2, width, height);
   noTint(); // 이후 이미지에는 영향 없도록 초기화
   function drawGlow() {
@@ -55,6 +46,16 @@ function draw() {
   let imgX = width / 2;
   let imgY = height / 2;
   image(rabbitImg, imgX, imgY);
+
+  // 3) 오른손 시계 오프셋
+  const clockOffsetX = 143;
+  const clockOffsetY = 65;
+  const clockRadius = 30;
+  drawClockHands(
+    imgX + clockOffsetX,
+    imgY + clockOffsetY,
+    clockRadius
+  );
 
   // 눈 좌표 설정
   eyeL.x = imgX + -10;
@@ -216,10 +217,6 @@ function drawClockHands(x, y, radius) {
        sin(mAngle) * radius * 0.8);
   pop();
   
-  function drawClockHands(x, y, radius) {
-  const hr = hour() % 12;
-  const mn = minute();
-  const sc = second();
 
   push();
   translate(x, y);
@@ -242,7 +239,6 @@ function drawClockHands(x, y, radius) {
   line(0, 0, cos(sAngle) * radius * 0.9, sin(sAngle) * radius * 0.9);
 
   pop();
-}
 
 }
 
