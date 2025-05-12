@@ -192,61 +192,33 @@ function drawRipples() {
   }
 }
 function drawClockHands(x, y, radius) {
-  let hr = hour() % 12;
-  let mn = minute();
-  let sc = second();
-}
-
-
-  push();
-  translate(x, y);
-  stroke(1);
-  strokeCap(ROUND);
-  
-  // 시침
-  strokeWeight(6);
-  // 시침 각도: 0시 기준 위쪽, 시계 방향 증가
-  const hAngle = map(hr + mn/60, 0, 12, 0, TWO_PI) - HALF_PI;
-  line(0, 0,
-       cos(hAngle) * radius * 0.5,
-       sin(hAngle) * radius * 0.5);
-
-  // 분침
-  strokeWeight(4);
-  const mAngle = map(mn + sc/60, 0, 60, 0, TWO_PI) - HALF_PI;
-  line(0, 0,
-       cos(mAngle) * radius * 0.8,
-       sin(mAngle) * radius * 0.8);
-  pop();
-  
-  function drawClockHands(x, y, radius) {
   const hr = hour() % 12;
   const mn = minute();
   const sc = second();
 
   push();
   translate(x, y);
+  strokeCap(ROUND); // 둥근 끝 처리
 
-  // 시침 (흰색, 굵기 6)
+  // 시침
   stroke(255);
   strokeWeight(6);
-  const hAngle = map(hr + mn/60, 0, 12, 0, TWO_PI) - HALF_PI;
+  let hAngle = map(hr + mn / 60, 0, 12, 0, TWO_PI) - HALF_PI;
   line(0, 0, cos(hAngle) * radius * 0.5, sin(hAngle) * radius * 0.5);
 
-  // 분침 (흰색, 굵기 4)
+  // 분침
   strokeWeight(4);
-  const mAngle = map(mn + sc/60, 0, 60, 0, TWO_PI) - HALF_PI;
+  let mAngle = map(mn + sc / 60, 0, 60, 0, TWO_PI) - HALF_PI;
   line(0, 0, cos(mAngle) * radius * 0.8, sin(mAngle) * radius * 0.8);
 
-  // 초침 (빨간색, 굵기 2)
+  // 초침 (밝은 빨간색 + 두꺼움)
   stroke(255, 100, 100);
-  strokeWeight(2);
-  const sAngle = map(sc, 0, 60, 0, TWO_PI) - HALF_PI;
+  strokeWeight(3);
+  let sAngle = map(sc, 0, 60, 0, TWO_PI) - HALF_PI;
   line(0, 0, cos(sAngle) * radius * 0.9, sin(sAngle) * radius * 0.9);
 
   pop();
 }
 
-}
 
 
