@@ -29,6 +29,15 @@ function draw() {
   drawLightGrid(); // 🔴 마우스 반응 빛 배경
   drawResponsiveCurve(); // 💫 부드러운 배경 곡선
   tint(255, 40); // 투명도 조절 (0~255)
+     // 3) 오른손 시계 오프셋
+  const clockOffsetX = 143;
+  const clockOffsetY = 65;
+  const clockRadius = 30;
+   drawClockHands(
+    imgX + clockOffsetX,
+    imgY + clockOffsetY,
+    clockRadius
+  );
   image(bgImg, width / 2, height / 2, width, height);
   noTint(); // 이후 이미지에는 영향 없도록 초기화
   function drawGlow() {
@@ -75,15 +84,6 @@ function draw() {
     ellipse(eyeL.x, eyeL.y, 16, 5);
     ellipse(eyeR.x, eyeR.y, 16, 5);
   }
-   // 3) 오른손 시계 오프셋
-  const clockOffsetX = 143;
-  const clockOffsetY = 65;
-  const clockRadius = 30;
-  drawClockHands(
-    imgX + clockOffsetX,
-    imgY + clockOffsetY,
-    clockRadius
-  );
 }
 let dancheongColors = ['#b22222', '#7A140F', '#000000'];
 
