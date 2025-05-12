@@ -197,14 +197,11 @@ function drawClockHands(x, y, radius) {
   let sc = second();
 }
 
-function drawClockHands(x, y, radius) {
-  const hr = hour() % 12;
-  const mn = minute();
-  const sc = second();
 
   push();
   translate(x, y);
   stroke(1);
+  strokeCap(ROUND);
   
   // 시침
   strokeWeight(6);
@@ -242,7 +239,7 @@ function drawClockHands(x, y, radius) {
   line(0, 0, cos(mAngle) * radius * 0.8, sin(mAngle) * radius * 0.8);
 
   // 초침 (빨간색, 굵기 2)
-  stroke(255, 60, 60);
+  stroke(255, 100, 100);
   strokeWeight(2);
   const sAngle = map(sc, 0, 60, 0, TWO_PI) - HALF_PI;
   line(0, 0, cos(sAngle) * radius * 0.9, sin(sAngle) * radius * 0.9);
