@@ -30,8 +30,7 @@ function draw() {
   drawResponsiveCurve(); // 💫 부드러운 배경 곡선
   tint(255, 40); // 투명도 조절 (0~255)
   image(bgImg, width/2, height/2, width, height);
-  noTint(); // 이후 이미지에는 영향 없도록 초기화
-  function drawGlow() {
+   function drawGlow() {
   push();
   noStroke();
   for (let r = 200; r > 0; r -= 10) {
