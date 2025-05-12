@@ -191,16 +191,6 @@ function drawRipples() {
     }
   }
 }
-function drawClockHands(x, y, radius) {
-  let hr = hour() % 12;
-  let mn = minute();
-  let sc = second();
-}
-
-function drawClockHands(x, y, radius) {
-  const hr = hour() % 12;
-  const mn = minute();
-  const sc = second();
 
   push();
   translate(x, y);
@@ -251,6 +241,5 @@ function drawClockHands(x, y, radius) {
   pop();
 }
 
-}
 
 
