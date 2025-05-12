@@ -14,7 +14,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  imageMode(CORNER);  // 배경을 (0,0) 기준으로 그리기
+  imageMode(CENTER);
   for (let x = 0; x <= width; x += 60) {
     wavePoints.push({ x: x, y: height * 0.8 });
   }
@@ -24,9 +24,9 @@ function setup() {
 }
 
 function draw() {
-  // 1) 배경
+  imageMode(CENTER);  // 배경을 (0,0) 기준으로 그리기
   tint(255, 40);
-  image(bgImg, 0, 0, width, height);
+  image(bgImg, width/2, height/2, width, height);
   noTint();
 
   // 2) 이펙트
