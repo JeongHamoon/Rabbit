@@ -29,7 +29,7 @@ function draw() {
   drawLightGrid(); // 🔴 마우스 반응 빛 배경
   drawResponsiveCurve(); // 💫 부드러운 배경 곡선
   tint(255, 40); // 투명도 조절 (0~255)
-  image(bgImg, width / 2, height / 2,1440, 1024);
+  image(bgImg, width / 2, height / 2,windowWidth, windowHeight);
   noTint(); // 이후 이미지에는 영향 없도록 초기화
   function drawGlow() {
   push();
