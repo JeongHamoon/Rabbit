@@ -24,7 +24,6 @@ function setup() {
 }
 
 function draw() {
-  imageMode(CENTER);  // 배경을 (0,0) 기준으로 그리기
   tint(255, 40);
   image(bgImg, width/2, height/2, width, height);
   noTint();
