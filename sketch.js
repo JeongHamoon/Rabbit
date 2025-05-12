@@ -36,9 +36,7 @@ function draw() {
 
   // 3) 로고와 눈
   let imgX = width/2, imgY = height/2;
-  imageMode(CENTER);
   image(rabbitImg, imgX, imgY);
-  imageMode(CORNER);
 
   eyeL.x = imgX - 10; eyeL.y = imgY - 140;
   eyeR.x = imgX + 50; eyeR.y = imgY - 150;
