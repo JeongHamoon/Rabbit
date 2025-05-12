@@ -13,7 +13,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1440, 1040);
+  createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
   for (let x = 0; x <= width; x += 60) {
   wavePoints.push({ x: x, y: height * 0.8 });}
@@ -29,7 +29,7 @@ function draw() {
   drawLightGrid(); // 🔴 마우스 반응 빛 배경
   drawResponsiveCurve(); // 💫 부드러운 배경 곡선
   tint(255, 40); // 투명도 조절 (0~255)
-  image(bgImg, width / 2, height / 2,1440, 1024);
+  image(bgImg, width / 2, height / 2, width, height);
   noTint(); // 이후 이미지에는 영향 없도록 초기화
   function drawGlow() {
   push();
@@ -242,7 +242,7 @@ function drawClockHands(x, y, radius) {
   line(0, 0, cos(mAngle) * radius * 0.8, sin(mAngle) * radius * 0.8);
 
   // 초침 (빨간색, 굵기 2)
-  stroke(255, 0, 0);
+  stroke(255, 60, 60);
   strokeWeight(2);
   const sAngle = map(sc, 0, 60, 0, TWO_PI) - HALF_PI;
   line(0, 0, cos(sAngle) * radius * 0.9, sin(sAngle) * radius * 0.9);
