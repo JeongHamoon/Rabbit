@@ -77,8 +77,8 @@ function draw() {
   }
    // 3) 오른손 시계 오프셋
   const clockOffsetX = 143;
-  const clockOffsetY = 65;
-  const clockRadius = 30;
+  const clockOffsetY = 63;
+  const clockRadius = 25;
   drawClockHands(
     imgX + clockOffsetX,
     imgY + clockOffsetY,
@@ -191,12 +191,11 @@ function drawRipples() {
     }
   }
 }
-function drawClockHands(x, y, radius) {
-  let hr = hour() % 12;
-  let mn = minute();
-  let sc = second();
-}
 
+function drawClockHands(x, y, radius) {
+  const hr = hour() % 12;
+  const mn = minute();
+  const sc = second();
 function drawClockHands(x, y, radius) {
   const hr = hour() % 12;
   const mn = minute();
@@ -227,9 +226,6 @@ function drawClockHands(x, y, radius) {
   const mn = minute();
   const sc = second();
 
-  push();
-  translate(x, y);
-
   // 시침 (흰색, 굵기 6)
   stroke(255);
   strokeWeight(6);
@@ -251,5 +247,5 @@ function drawClockHands(x, y, radius) {
 }
 
 }
-
+}
 
