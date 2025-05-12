@@ -14,7 +14,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  imageMode(CENTER);
+  imageMode(CORNER);
   for (let x = 0; x <= width; x += 60) {
   wavePoints.push({ x: x, y: height * 0.8 });}
   for (let i = 0; i < width; i += 40) {
