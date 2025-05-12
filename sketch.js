@@ -213,7 +213,7 @@ function drawClockHands(x, y, radius) {
   line(0, 0, cos(mAngle) * radius * 0.8, sin(mAngle) * radius * 0.8);
 
   // ** second hand (red) **
-  stroke('10');      // this is the fix
+  stroke(10);      // this is the fix
   strokeWeight(2);
   let sAngle = map(sc, 0, 60, 0, TWO_PI) - HALF_PI;
   line(0, 0, cos(sAngle) * radius * 0.9, sin(sAngle) * radius * 0.9);
