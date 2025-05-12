@@ -76,8 +76,8 @@ function draw() {
     ellipse(eyeR.x, eyeR.y, 16, 5);
   }
    // 3) 오른손 시계 오프셋
-  const clockOffsetX = 143;
-  const clockOffsetY = 65;
+  const clockOffsetX = 153;
+  const clockOffsetY = 45;
   const clockRadius = 30;
   drawClockHands(
     imgX + clockOffsetX,
