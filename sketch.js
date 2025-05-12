@@ -231,12 +231,13 @@ function drawClockHands(x, y, radius) {
   translate(x, y);
 
   // 시침 (흰색, 굵기 6)
-  stroke(255);
+  stroke(0);
   strokeWeight(6);
   const hAngle = map(hr + mn/60, 0, 12, 0, TWO_PI) - HALF_PI;
   line(0, 0, cos(hAngle) * radius * 0.5, sin(hAngle) * radius * 0.5);
 
   // 분침 (흰색, 굵기 4)
+  stroke(0);
   strokeWeight(4);
   const mAngle = map(mn + sc/60, 0, 60, 0, TWO_PI) - HALF_PI;
   line(0, 0, cos(mAngle) * radius * 0.8, sin(mAngle) * radius * 0.8);
