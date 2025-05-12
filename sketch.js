@@ -14,7 +14,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  imageMode(CENTER);
+  imageMode(CORNER);
   for (let x = 0; x <= width; x += 60) {
   wavePoints.push({ x: x, y: height * 0.8 });}
   for (let i = 0; i < width; i += 40) {
@@ -29,7 +29,7 @@ function draw() {
   drawLightGrid(); // 🔴 마우스 반응 빛 배경
   drawResponsiveCurve(); // 💫 부드러운 배경 곡선
   tint(255, 40); // 투명도 조절 (0~255)
-  image(bgImg, width / 2, height / 2,1440, 1024);
+  image(bgImg, width / 2, height / 2, width, height);
   noTint(); // 이후 이미지에는 영향 없도록 초기화
   function drawGlow() {
   push();
@@ -77,8 +77,8 @@ function draw() {
   }
    // 3) 오른손 시계 오프셋
   const clockOffsetX = 143;
-  const clockOffsetY = 65;
-  const clockRadius = 30;
+  const clockOffsetY = 63;
+  const clockRadius = 25;
   drawClockHands(
     imgX + clockOffsetX,
     imgY + clockOffsetY,
@@ -191,11 +191,6 @@ function drawRipples() {
     }
   }
 }
-function drawClockHands(x, y, radius) {
-  let hr = hour() % 12;
-  let mn = minute();
-  let sc = second();
-}
 
 function drawClockHands(x, y, radius) {
   const hr = hour() % 12;
@@ -204,52 +199,24 @@ function drawClockHands(x, y, radius) {
 
   push();
   translate(x, y);
-  stroke(1);
-  
-  // 시침
+  strokeCap(ROUND);
+
+  // ** hour hand (black) **
+  stroke(0);
   strokeWeight(6);
-  // 시침 각도: 0시 기준 위쪽, 시계 방향 증가
-  const hAngle = map(hr + mn/60, 0, 12, 0, TWO_PI) - HALF_PI;
-  line(0, 0,
-       cos(hAngle) * radius * 0.5,
-       sin(hAngle) * radius * 0.5);
-
-  // 분침
-  strokeWeight(4);
-  const mAngle = map(mn + sc/60, 0, 60, 0, TWO_PI) - HALF_PI;
-  line(0, 0,
-       cos(mAngle) * radius * 0.8,
-       sin(mAngle) * radius * 0.8);
-  pop();
-  
-  function drawClockHands(x, y, radius) {
-  const hr = hour() % 12;
-  const mn = minute();
-  const sc = second();
-
-  push();
-  translate(x, y);
-
-  // 시침 (흰색, 굵기 6)
-  stroke(255);
-  strokeWeight(6);
-  const hAngle = map(hr + mn/60, 0, 12, 0, TWO_PI) - HALF_PI;
+  let hAngle = map(hr + mn/60, 0, 12, 0, TWO_PI) - HALF_PI;
   line(0, 0, cos(hAngle) * radius * 0.5, sin(hAngle) * radius * 0.5);
 
-  // 분침 (흰색, 굵기 4)
+  // ** minute hand (black) **
   strokeWeight(4);
-  const mAngle = map(mn + sc/60, 0, 60, 0, TWO_PI) - HALF_PI;
+  let mAngle = map(mn + sc/60, 0, 60, 0, TWO_PI) - HALF_PI;
   line(0, 0, cos(mAngle) * radius * 0.8, sin(mAngle) * radius * 0.8);
 
-  // 초침 (빨간색, 굵기 2)
-  stroke(255, 100, 100);
+  // ** second hand (red) **
+  stroke('10');      // this is the fix
   strokeWeight(2);
-  const sAngle = map(sc, 0, 60, 0, TWO_PI) - HALF_PI;
+  let sAngle = map(sc, 0, 60, 0, TWO_PI) - HALF_PI;
   line(0, 0, cos(sAngle) * radius * 0.9, sin(sAngle) * radius * 0.9);
 
   pop();
 }
-
-}
-
-
