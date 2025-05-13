@@ -23,6 +23,10 @@ function setup() {
 
 }
 
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
+
 function draw() {
   drawDynamicCurve(); // ✅ 반드시 draw() 함수 내부에 있어야 화면에 나타남
   drawRipples();
@@ -42,49 +46,57 @@ function draw() {
   }
   
 
-  // 로고 위치
+ // 화면 너비가 1440px 이상이면 1, 작으면 비율대로 축소
+  let scaleFactor = min(width / 1440, 1);
+
+  // 3) 토끼 이미지 크기 계산 (추가)
+  let imgW = rabbitImg.width * scaleFactor;
+  let imgH = rabbitImg.height * scaleFactor;
+
+  // 4) 토끼 중앙 배치 (변경)
   let imgX = width / 2;
   let imgY = height / 2;
-  image(rabbitImg, imgX, imgY);
+  image(rabbitImg, imgX, imgY, imgW, imgH);
 
   // 눈 좌표 설정
-  eyeL.x = imgX + -10;
-  eyeL.y = imgY - 140;
-  eyeR.x = imgX + 50;
-  eyeR.y = imgY - 150;
+  eyeL.x = imgX + (-10 * scaleFactor);
+  eyeL.y = imgY + (-140 * scaleFactor);
+  eyeR.x = imgX + ( 50 * scaleFactor);
+  eyeR.y = imgY + (-150 * scaleFactor);
 
-  let offset = 5;
+  let offset = 5 * scaleFactor;  
   let angleL = atan2(mouseY - eyeL.y, mouseX - eyeL.x);
   let angleR = atan2(mouseY - eyeR.y, mouseX - eyeR.x);
 
-  if (!blink) {
-    // 왼쪽 눈
-    fill(180, 20, 20);
+   if (!blink) {
     noStroke();
-    ellipse(eyeL.x + cos(angleL) * offset, eyeL.y + sin(angleL) * offset, 23, 20);
-    fill(255);
-    ellipse(eyeL.x + cos(angleL) * offset - 3, eyeL.y + sin(angleL) * offset - 3, 7, 7);
-
-    // 오른쪽 눈
+    // 왼쪽 동공
     fill(180, 20, 20);
-    ellipse(eyeR.x + cos(angleR) * offset, eyeR.y + sin(angleR) * offset, 16, 15);
+    ellipse(eyeL.x + cos(angleL)*offset, eyeL.y + sin(angleL)*offset,
+            23 * scaleFactor, 20 * scaleFactor);
     fill(255);
-    ellipse(eyeR.x + cos(angleR) * offset - 3, eyeR.y + sin(angleR) * offset - 3, 5, 5);
+    ellipse(eyeL.x + cos(angleL)*offset -3, eyeL.y + sin(angleL)*offset -3,
+            7 * scaleFactor, 7 * scaleFactor);
+
+    // 오른쪽 동공
+    fill(180,20,20);
+    ellipse(eyeR.x + cos(angleR)*offset, eyeR.y + sin(angleR)*offset,
+            16 * scaleFactor, 15 * scaleFactor);
+    fill(255);
+    ellipse(eyeR.x + cos(angleR)*offset -3, eyeR.y + sin(angleR)*offset -3,
+            5 * scaleFactor, 5 * scaleFactor);
   } else {
     fill(0);
-    ellipse(eyeL.x, eyeL.y, 16, 5);
-    ellipse(eyeR.x, eyeR.y, 16, 5);
+    ellipse(eyeL.x, eyeL.y, 16 * scaleFactor, 5 * scaleFactor);
+    ellipse(eyeR.x, eyeR.y, 16 * scaleFactor, 5 * scaleFactor);
   }
    // 3) 오른손 시계 오프셋
-  const clockOffsetX = 143;
-  const clockOffsetY = 65;
-  const clockRadius = 30;
-  drawClockHands(
-    imgX + clockOffsetX,
-    imgY + clockOffsetY,
-    clockRadius
-  );
+ const clockOffsetX = 143 * scaleFactor;
+  const clockOffsetY =  65 * scaleFactor;
+  const clockRadius  =  30 * scaleFactor;
+  drawClockHands(imgX + clockOffsetX, imgY + clockOffsetY, clockRadius);
 }
+
 let dancheongColors = ['#b22222', '#7A140F', '#000000'];
 
 function drawLightGrid() {
