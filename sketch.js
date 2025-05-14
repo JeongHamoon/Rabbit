@@ -162,11 +162,11 @@ function drawDynamicCurve() {
     curveVertex(first.x, first.y);
 
     for (let pt of dynamicCurvePoints) {
-      let d = dist(mouseX, mouseY, pt.x, baseY); // ✅ d는 여기서 정의
-      let offsetY = map(d, 0, 300, -40, 40);
+      let d = dist(mouseX, mouseY, pt.x, baseY); // ✅ 여기서 d 정의
+      let offsetY = map(d, 0, 300, -40, 40);      // ✅ d 사용
       let wave = sin(frameCount * 0.05 + pt.x * 0.01 + i * 0.1) * 10;
       let targetY = baseY + offsetY + wave;
-      pt.y = lerp(pt.y, targetY, 0.1); // ✅ 유기적 움직임
+      pt.y = lerp(pt.y, targetY, 0.1);
       curveVertex(pt.x, pt.y);
     }
 
@@ -177,6 +177,7 @@ function drawDynamicCurve() {
     endShape();
   }
 }
+
 
 
 
