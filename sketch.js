@@ -148,7 +148,7 @@ function drawDynamicCurve() {
   let numCurves = 12;
   let spacing = height / (numCurves + 1);
 
-  for (let i = 0; i < numCurves; i++) {
+  for (let i = 1; i < numCurves; i++) {
     let baseY = spacing * (i + 1);
     let thickness = map(i, 0, numCurves - 1, 1.5, 0.2);
 
