@@ -169,39 +169,41 @@ function drawDynamicCurve() {
       } else {
         firstCurveAlpha = 0;
         firstCurveFaded = true;
-        continue; // 더 이상 그리지 않음
+        continue; // 완전히 사라졌으면 그리지 않음
       }
 
-      stroke(255, 60, 60, firstCurveAlpha); // 페이드 아웃 적용
+      stroke(255, 60, 60, firstCurveAlpha);
     } else {
-      stroke(255, 60, 60, 120); // 나머지는 고정 투명도
+      stroke(255, 60, 60, 120); // 나머지 곡선은 불투명하게 유지
     }
 
     strokeWeight(thickness);
     beginShape();
 
+    // 보조점
     let first = dynamicCurvePoints[0];
-    curveVertex(first.x - 40, first.y); // 왼쪽 보조점
+    curveVertex(first.x - 40, first.y);
     curveVertex(first.x, first.y);
 
- for (let pt of dynamicCurvePoints) {
-  let d = dist(mouseX, mouseY, pt.x, baseY);
-  let offsetY = i === 0
-    ? map(d, 0, 300, -5, 5)
-    : map(d, 0, 300, -40, 40);
-  let wave = sin(frameCount * 0.05 + pt.x * 0.01 + i * 0.1) * 10;
-  let targetY = baseY + offsetY + wave;
-  curveVertex(pt.x, pt.y);
-}
+    for (let pt of dynamicCurvePoints) {
+      let d = dist(mouseX, mouseY, pt.x, baseY);
+      let offsetY = i === 0
+        ? map(d, 0, 300, -5, 5)
+        : map(d, 0, 300, -40, 40);
+      let wave = sin(frameCount * 0.05 + pt.x * 0.01 + i * 0.1) * 10;
+      let y = baseY + offsetY + wave;
 
+      curveVertex(pt.x, y); // pt.y를 쓰지 않고 직접 계산한 y 좌표 사용
+    }
 
     let last = dynamicCurvePoints[dynamicCurvePoints.length - 1];
     curveVertex(last.x, last.y);
-    curveVertex(last.x + 40, last.y); // 오른쪽 보조점
+    curveVertex(last.x + 40, last.y);
 
     endShape();
   }
 }
+
 
 
 
