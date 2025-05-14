@@ -157,10 +157,12 @@ function drawDynamicCurve() {
 
     beginShape();
 
-    // ✨ 왼쪽 보조점 추가
-    let firstPt = dynamicCurvePoints[0];
-    curveVertex(firstPt.x - 40, firstPt.y);
+    // 왼쪽 보조점 2개
+    let first = dynamicCurvePoints[0];
+      curveVertex(first.x, first.y);
+      curveVertex(first.x, first.y);
 
+    // 메인 곡선
     for (let pt of dynamicCurvePoints) {
       let d = dist(mouseX, mouseY, pt.x, baseY);
       let offsetY = map(d, 0, 300, -40, 40);
@@ -170,13 +172,15 @@ function drawDynamicCurve() {
       curveVertex(pt.x, pt.y);
     }
 
-    // ✨ 오른쪽 보조점 추가
-    let lastPt = dynamicCurvePoints[dynamicCurvePoints.length - 1];
-    curveVertex(lastPt.x + 40, lastPt.y);
+    // 오른쪽 보조점 2개
+    let last = dynamicCurvePoints[dynamicCurvePoints.length - 1];
+    curveVertex(last.x, last.y);
+    curveVertex(last.x, last.y);
 
     endShape();
   }
 }
+
 
 
 function drawRipples() {
