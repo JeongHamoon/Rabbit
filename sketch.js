@@ -6,6 +6,10 @@ let bgImg;
 let wavePoints = [];
 let dynamicCurvePoints = [];
 let rippleEffects = [];
+let firstCurveAlpha = 255;       // current opacity of the first curve (255 = fully opaque)
+let firstCurveFaded = false;    // flag to indicate if the first curve has finished fading
+let fadeStartTime = 0;          // timestamp when fade-out began
+
 
 function preload() {
   rabbitImg = loadImage("Asset 4@4x.png");
@@ -15,6 +19,8 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
+  
+  fadeStartTime = millis();  // mark the time when the first curve appears
 
   dynamicCurvePoints = [];
   for (let x = -width; x <= width * 2; x += 40) {
@@ -150,20 +156,32 @@ function drawDynamicCurve() {
 
   for (let i = 0; i < numCurves; i++) {
     let baseY = spacing * (i + 1);
-    if (i === 0) baseY += 80;
-    let offsetY = i === 0
-    ? map(d, 0, 300, -5, 5)
-    : map(d, 0, 300, -40, 40);
     let thickness = map(i, 0, numCurves - 1, 1.2, 0.4);
 
-    stroke(255, 60, 60, 120);
-    strokeWeight(thickness);
+    // ✅ 첫 번째 곡선만 페이드 아웃
+    if (i === 0) {
+      if (firstCurveFaded) continue;
 
+      let elapsed = millis() - fadeStartTime;
+
+      if (elapsed < 1000) {
+        firstCurveAlpha = map(elapsed, 0, 1000, 255, 0);
+      } else {
+        firstCurveAlpha = 0;
+        firstCurveFaded = true;
+        continue; // 더 이상 그리지 않음
+      }
+
+      stroke(255, 60, 60, firstCurveAlpha); // 페이드 아웃 적용
+    } else {
+      stroke(255, 60, 60, 120); // 나머지는 고정 투명도
+    }
+
+    strokeWeight(thickness);
     beginShape();
 
-    // ✅ 왼쪽 보조점 (양쪽 curveVertex가 꼭 두 번 필요함!)
     let first = dynamicCurvePoints[0];
-    curveVertex(first.x - 40, first.y); // 왼쪽 밖으로 하나 더
+    curveVertex(first.x - 40, first.y); // 왼쪽 보조점
     curveVertex(first.x, first.y);
 
     for (let pt of dynamicCurvePoints) {
@@ -175,14 +193,14 @@ function drawDynamicCurve() {
       curveVertex(pt.x, pt.y);
     }
 
-    // ✅ 오른쪽 보조점
     let last = dynamicCurvePoints[dynamicCurvePoints.length - 1];
     curveVertex(last.x, last.y);
-    curveVertex(last.x + 40, last.y); // 오른쪽 밖으로 하나 더
+    curveVertex(last.x + 40, last.y); // 오른쪽 보조점
 
     endShape();
   }
 }
+
 
 
 
