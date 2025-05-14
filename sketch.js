@@ -184,14 +184,17 @@ function drawDynamicCurve() {
     curveVertex(first.x - 40, first.y); // 왼쪽 보조점
     curveVertex(first.x, first.y);
 
-    for (let pt of dynamicCurvePoints) {
-      let d = dist(mouseX, mouseY, pt.x, baseY);
-      let offsetY = map(d, 0, 300, -40, 40);
-      let wave = sin(frameCount * 0.05 + pt.x * 0.01 + i * 0.1) * 10;
-      let targetY = baseY + offsetY + wave;
-      pt.y = lerp(pt.y, targetY, 0.1);
-      curveVertex(pt.x, pt.y);
-    }
+ for (let pt of dynamicCurvePoints) {
+  let d = dist(mouseX, mouseY, pt.x, baseY);
+  let offsetY = i === 0
+    ? map(d, 0, 300, -5, 5)
+    : map(d, 0, 300, -40, 40);
+  let wave = sin(frameCount * 0.05 + pt.x * 0.01 + i * 0.1) * 10;
+  let targetY = baseY + offsetY + wave;
+  pt.y = lerp(pt.y, targetY, 0.1);
+  curveVertex(pt.x, pt.y);
+}
+
 
     let last = dynamicCurvePoints[dynamicCurvePoints.length - 1];
     curveVertex(last.x, last.y);
