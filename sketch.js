@@ -25,7 +25,18 @@ function setup() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+
+  wavePoints = [];
+  for (let x = 0; x <= width; x += 60) {
+    wavePoints.push({ x: x, y: height * 0.8 });
+  }
+
+  dynamicCurvePoints = [];
+  for (let i = 0; i < width; i += 40) {
+    dynamicCurvePoints.push({ x: i, y: height / 2 });
+  }
 }
+
 
 function draw() {
   drawDynamicCurve();
@@ -93,7 +104,11 @@ function drawResponsiveCurve() {
   stroke(255, 50, 50, 60);
   strokeWeight(2);
   beginShape();
-  curveVertex(0, height * 0.3); // 시작 보조점
+  let startY = wavePoints[0]?.y || height * 0.3;
+  let endY = wavePoints[wavePoints.length - 1]?.y || height * 0.3;
+  
+  curveVertex(0, startY);
+  curveVertex(0, startY);
   for (let pt of wavePoints) {
     let d = dist(mouseX, mouseY, pt.x, pt.y);
     let offsetY = map(d, 0, 300, -60, 60);
@@ -102,7 +117,8 @@ function drawResponsiveCurve() {
     pt.y = lerp(pt.y, targetY, 0.1);
     curveVertex(pt.x, pt.y);
   }
-  curveVertex(width, height * 0.3); // 끝 보조점
+  curveVertex(width, endY);
+  curveVertex(width, endY);
   endShape();
 }
 
@@ -142,7 +158,11 @@ function drawDynamicCurve() {
     strokeWeight(thickness);
 
     beginShape();
-    curveVertex(0, baseY);
+    let firstY = dynamicCurvePoints[0]?.y || baseY;
+    curveVertex(0, firstY);
+    curveVertex(0, firstY);
+  
+    
     for (let pt of dynamicCurvePoints) {
       let d = dist(mouseX, mouseY, pt.x, baseY);
       let offsetY = map(d, 0, 300, -40, 40);
@@ -151,7 +171,10 @@ function drawDynamicCurve() {
       pt.y = lerp(pt.y, targetY, 0.1);
       curveVertex(pt.x, pt.y);
     }
-    curveVertex(width, baseY);
+    let lastY = dynamicCurvePoints[dynamicCurvePoints.length - 1]?.y || baseY;
+    curveVertex(width, lastY);
+    curveVertex(width, lastY);
+
     endShape();
   }
 }
