@@ -15,16 +15,30 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
+
+  dynamicCurvePoints = [];
+  for (let x = -200; x <= width + 200; x += 40) {
+    dynamicCurvePoints.push({ x: x, y: height / 2 });
+  }
+
+  wavePoints = [];
   for (let x = 0; x <= width; x += 60) {
     wavePoints.push({ x: x, y: height * 0.8 });
-  }
-  for (let i = 0; i < width; i += 40) {
-    dynamicCurvePoints.push({ x: i, y: height / 2 });
   }
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+
+  wavePoints = [];
+  for (let x = 0; x <= width; x += 60) {
+    wavePoints.push({ x: x, y: height * 0.8 });
+  }
+
+  dynamicCurvePoints = [];
+  for (let x = -200; x <= width + 200; x += 40) {
+    dynamicCurvePoints.push({ x: x, y: height / 2 });
+  }
 }
 
 function draw() {
