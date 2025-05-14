@@ -93,6 +93,7 @@ function drawResponsiveCurve() {
   stroke(255, 50, 50, 60);
   strokeWeight(2);
   beginShape();
+  curveVertex(0, height * 0.3); // 시작 보조점
   for (let pt of wavePoints) {
     let d = dist(mouseX, mouseY, pt.x, pt.y);
     let offsetY = map(d, 0, 300, -60, 60);
@@ -101,6 +102,7 @@ function drawResponsiveCurve() {
     pt.y = lerp(pt.y, targetY, 0.1);
     curveVertex(pt.x, pt.y);
   }
+  curveVertex(width, height * 0.3); // 끝 보조점
   endShape();
 }
 
@@ -140,6 +142,7 @@ function drawDynamicCurve() {
     strokeWeight(thickness);
 
     beginShape();
+    curveVertex(0, baseY);
     for (let pt of dynamicCurvePoints) {
       let d = dist(mouseX, mouseY, pt.x, baseY);
       let offsetY = map(d, 0, 300, -40, 40);
@@ -148,6 +151,7 @@ function drawDynamicCurve() {
       pt.y = lerp(pt.y, targetY, 0.1);
       curveVertex(pt.x, pt.y);
     }
+    curveVertex(width, baseY);
     endShape();
   }
 }
