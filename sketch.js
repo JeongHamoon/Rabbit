@@ -15,34 +15,17 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
-
-  wavePoints = [];
   for (let x = 0; x <= width; x += 60) {
     wavePoints.push({ x: x, y: height * 0.8 });
   }
-
-  dynamicCurvePoints = [];
   for (let i = 0; i < width; i += 40) {
     dynamicCurvePoints.push({ x: i, y: height / 2 });
   }
 }
-
-
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-
-  wavePoints = [];
-  for (let x = 0; x <= width; x += 60) {
-    wavePoints.push({ x: x, y: height * 0.8 });
-  }
-
-  dynamicCurvePoints = [];
-  for (let i = 0; i < width; i += 40) {
-    dynamicCurvePoints.push({ x: i, y: height / 2 });
-  }
 }
-
 
 function draw() {
   drawDynamicCurve();
@@ -110,11 +93,6 @@ function drawResponsiveCurve() {
   stroke(255, 50, 50, 60);
   strokeWeight(2);
   beginShape();
-  let startY = wavePoints[0]?.y || height * 0.3;
-  let endY = wavePoints[wavePoints.length - 1]?.y || height * 0.3;
-  
-  curveVertex(0, startY);
-  curveVertex(0, startY);
   for (let pt of wavePoints) {
     let d = dist(mouseX, mouseY, pt.x, pt.y);
     let offsetY = map(d, 0, 300, -60, 60);
@@ -123,8 +101,6 @@ function drawResponsiveCurve() {
     pt.y = lerp(pt.y, targetY, 0.1);
     curveVertex(pt.x, pt.y);
   }
-  curveVertex(width, endY);
-  curveVertex(width, endY);
   endShape();
 }
 
@@ -176,10 +152,6 @@ function drawDynamicCurve() {
   }
 }
 
-
-
-
-
 function drawRipples() {
   noFill();
   for (let i = rippleEffects.length - 1; i >= 0; i--) {
@@ -225,7 +197,7 @@ function drawClockHands(x, y, radius) {
   stroke(255, 100, 100);
   strokeWeight(2);
   const sAngle = map(sc, 0, 60, 0, TWO_PI) - HALF_PI;
-  line(0, 0, cos(sAngle) * radius * 0.8, sin(sAngle) * radius * 0.9);
+  line(0, 0, cos(sAngle) * radius * 0.9, sin(sAngle) * radius * 0.9);
 
   pop();
 }
