@@ -148,7 +148,7 @@ function drawDynamicCurve() {
   let numCurves = 12;
   let spacing = height / (numCurves + 1);
 
-  for (let i = 2; i < numCurves; i++) {
+  for (let i = 1; i < numCurves; i++) {
     let baseY = spacing * (i + 1);
     let thickness = map(i, 0, numCurves - 1, 1.5, 0.2);
 
@@ -216,12 +216,12 @@ function drawClockHands(x, y, radius) {
   push();
   translate(x, y);
 
-  stroke(0);
+  stroke(200, 0, 0);
   strokeWeight(6);
   const hAngle = map(hr + mn / 60, 0, 12, 0, TWO_PI) - HALF_PI;
   line(0, 0, cos(hAngle) * radius * 0.5, sin(hAngle) * radius * 0.5);
   
-  stroke(0);
+  stroke(200, 0, 0);
   strokeWeight(4);
   const mAngle = map(mn + sc / 60, 0, 60, 0, TWO_PI) - HALF_PI;
   line(0, 0, cos(mAngle) * radius * 0.8, sin(mAngle) * radius * 0.8);
