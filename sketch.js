@@ -150,41 +150,38 @@ function drawDynamicCurve() {
   let numCurves = 12;
   let spacing = height / (numCurves + 1);
 
-  for (let i = 0; i < numCurves; i++) {
-    let baseY = spacing * (i + 1);
-    let thickness = map(i, 0, numCurves - 1, 1.5, 0.2);
+ for (let i = 0; i < numCurves; i++) {
+  let baseY = spacing * (i + 1);
+  let thickness = map(i, 0, numCurves - 1, 1.5, 0.2);
 
-    stroke(255, 60, 60, 120);
-    strokeWeight(thickness);
+  stroke(255, 60, 60, 120);
+  strokeWeight(thickness);
 
-    beginShape();
+  beginShape();
+  let first = dynamicCurvePoints[0];
+  let last = dynamicCurvePoints[dynamicCurvePoints.length - 1];
 
-    // 시작점
-    let firstX = dynamicCurvePoints[0].x;
-    let firstY = baseY;
-    curveVertex(firstX, firstY);
-    curveVertex(firstX, firstY);
+  // 왼쪽 보조점
+  curveVertex(first.x - 40, first.y);
+  curveVertex(first.x, first.y);
 
-    for (let pt of dynamicCurvePoints) {
-      let d = dist(mouseX, mouseY, pt.x, baseY);
-      let edgeFalloff = map(pt.x, 0, width, 0.2, 1);  // 양끝은 덜 흔들림
-      let offsetY = map(d, 0, 300, -40, 40) * edgeFalloff;
-      let wave = sin(frameCount * 0.05 + pt.x * 0.01 + i * 0.1) * 10 * edgeFalloff;
-      let targetY = baseY + offsetY + wave;
-
-      pt.y = lerp(pt.y, targetY, 0.05 + edgeFalloff * 0.1);
-      curveVertex(pt.x, pt.y);
-    }
-
-    // 끝점
-    let lastX = dynamicCurvePoints[dynamicCurvePoints.length - 1].x;
-    let lastY = baseY;
-    curveVertex(lastX, lastY);
-    curveVertex(lastX, lastY);
-
-    endShape();
+  for (let pt of dynamicCurvePoints) {
+    let d = dist(mouseX, mouseY, pt.x, baseY);
+    let waveOffset = i * 0.2; // 유기적인 흐름을 위해 추가
+    let offsetY = map(d, 0, 300, -40, 40);
+    let wave = sin(frameCount * 0.05 + pt.x * 0.01 + waveOffset) * 10;
+    let targetY = baseY + offsetY + wave;
+    pt.y = lerp(pt.y, targetY, 0.1);
+    curveVertex(pt.x, pt.y);
   }
+
+  // 오른쪽 보조점
+  curveVertex(last.x, last.y);
+  curveVertex(last.x + 40, last.y);
+
+  endShape();
 }
+
 
 
 function drawRipples() {
