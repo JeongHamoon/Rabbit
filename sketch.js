@@ -15,13 +15,21 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
+
+  // 양 끝 여유를 줌 (왼쪽 -40, 오른쪽 +40 쯤)
+  let startX = -40;
+  let endX = width + 40;
+  dynamicCurvePoints = [];
+  for (let x = startX; x <= endX; x += 40) {
+    dynamicCurvePoints.push({ x: x, y: height / 2 });
+  }
+
+  wavePoints = [];
   for (let x = 0; x <= width; x += 60) {
     wavePoints.push({ x: x, y: height * 0.8 });
   }
-  for (let i = 0; i < width; i += 40) {
-    dynamicCurvePoints.push({ x: i, y: height / 2 });
-  }
 }
+
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
@@ -150,38 +158,26 @@ function drawDynamicCurve() {
   let numCurves = 12;
   let spacing = height / (numCurves + 1);
 
- for (let i = 0; i < numCurves; i++) {
-  let baseY = spacing * (i + 1);
-  let thickness = map(i, 0, numCurves - 1, 1.5, 0.2);
+  for (let i = 0; i < numCurves; i++) {
+    let baseY = spacing * (i + 1);
+    let thickness = map(i, 0, numCurves - 1, 1.5, 0.2);
 
-  stroke(255, 60, 60, 120);
-  strokeWeight(thickness);
+    stroke(255, 60, 60, 120);
+    strokeWeight(thickness);
 
-  beginShape();
-  let first = dynamicCurvePoints[0];
-  let last = dynamicCurvePoints[dynamicCurvePoints.length - 1];
-
-  // 왼쪽 보조점
-  curveVertex(first.x - 40, first.y);
-  curveVertex(first.x, first.y);
-
-  for (let pt of dynamicCurvePoints) {
-    let last = dynamicCurvePoints[dynamicCurvePoints.length - 1];
-    let lastWave = sin(frameCount * 0.05 + last.x * 0.01 + waveOffset) * 10;
-    let d = dist(mouseX, mouseY, last.x, baseY);
-    let offsetY = map(d, 0, 300, -40, 40);
-    let lastY = baseY + offsetY + lastWave;
-    last.y = lerp(last.y, lastY, 0.1);
-    pt.y = lerp(pt.y, targetY, 0.1);
-    curveVertex(pt.x, pt.y);
+    beginShape();
+    for (let pt of dynamicCurvePoints) {
+      let d = dist(mouseX, mouseY, pt.x, baseY);
+      let wave = sin(frameCount * 0.05 + pt.x * 0.01 + i * 0.2) * 10;
+      let offsetY = map(d, 0, 300, -40, 40);
+      let targetY = baseY + offsetY + wave;
+      pt.y = lerp(pt.y, targetY, 0.1);
+      curveVertex(pt.x, pt.y);
+    }
+    endShape();
   }
-
-  // 오른쪽 보조점
-  curveVertex(last.x, last.y);
-  curveVertex(last.x + 40, last.y);
-
-  endShape();
 }
+
 
 
 
