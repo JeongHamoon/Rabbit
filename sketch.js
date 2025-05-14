@@ -13,19 +13,20 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  imageMode(CENTER);
-  for (let x = 0; x <= width; x += 60) {
-  wavePoints.push({ x: x, y: height * 0.8 });}
-  for (let i = 0; i < width; i += 40) {
-    dynamicCurvePoints.push({ x: i, y: height / 2 });
-  }
+  let fixedW = 1440;
+  let fixedH = 1024;
+
+  // 화면이 너무 작을 경우에만 줄여서 생성
+  let actualW = windowWidth < fixedW ? windowWidth : fixedW;
+  let actualH = windowHeight < fixedH ? windowHeight : fixedH;
+
+  createCanvas(actualW, actualH);
+}
+
+
 
 }
 
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-}
 
 function draw() {
   drawDynamicCurve(); // ✅ 반드시 draw() 함수 내부에 있어야 화면에 나타남
