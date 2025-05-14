@@ -149,8 +149,9 @@ function drawDynamicCurve() {
   let spacing = height / (numCurves + 1);
 
   // 🔧 i = 1부터 시작해서 첫 번째 곡선 생략
-  for (let i = 2; i < numCurves; i++) {
-    let baseY = spacing * (i + 0.8); // 위치 살짝 내려서 자연스럽게
+  for (let i = 1; i < numCurves; i++) {
+    let baseY = spacing * (i + 1); // 위치 살짝 내려서 자연스럽게
+    if (i === 1) baseY += 50; // 첫 줄만 내림
     let thickness = map(i, 1, numCurves - 1, 1.2, 0.4);
 
     stroke(255, 60, 60, 120);
