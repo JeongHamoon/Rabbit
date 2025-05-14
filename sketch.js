@@ -171,7 +171,7 @@ function drawDynamicCurve() {
       let offsetY = map(d, 0, 300, -40, 40);
       let wave = sin(frameCount * 0.05 + pt.x * 0.01 + i * 0.1) * 10;
       let targetY = baseY + offsetY + wave;
-      curveVertex(pt.x, pt.y);
+      curveVertex(pt.x, targetY);
     }
 
     // ✅ 오른쪽 보조점
