@@ -151,33 +151,32 @@ function drawDynamicCurve() {
   for (let i = 0; i < numCurves; i++) {
     let baseY = spacing * (i + 1);
     let thickness = map(i, 0, numCurves - 1, 1.2, 0.4);
-
     stroke(255, 60, 60, 120);
     strokeWeight(thickness);
 
     beginShape();
 
-    // 왼쪽 보조점
     let first = dynamicCurvePoints[0];
-    curveVertex(first.x - 40, baseY);
-    curveVertex(first.x, baseY);
+    curveVertex(first.x - 40, first.y); // 왼쪽 보조점
+    curveVertex(first.x, first.y);
 
     for (let pt of dynamicCurvePoints) {
-      let d = dist(mouseX, mouseY, pt.x, baseY); // ✅ 여기에 d를 정의해야 함
+      let d = dist(mouseX, mouseY, pt.x, baseY);
       let offsetY = map(d, 0, 300, -40, 40);
       let wave = sin(frameCount * 0.05 + pt.x * 0.01 + i * 0.1) * 10;
-      let y = baseY + offsetY + wave;
-      curveVertex(pt.x, y);
+      let targetY = baseY + offsetY + wave;
+      pt.y = lerp(pt.y, targetY, 0.1); // ✅ 여기가 핵심! y값을 애니메이션처럼 변화시켜줌
+      curveVertex(pt.x, pt.y);
     }
 
-    // 오른쪽 보조점
     let last = dynamicCurvePoints[dynamicCurvePoints.length - 1];
-    curveVertex(last.x, baseY);
-    curveVertex(last.x + 40, baseY);
+    curveVertex(last.x, last.y);
+    curveVertex(last.x + 40, last.y); // 오른쪽 보조점
 
     endShape();
   }
 }
+
 
 
 
