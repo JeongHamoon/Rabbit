@@ -148,9 +148,10 @@ function drawDynamicCurve() {
   let numCurves = 12;
   let spacing = height / (numCurves + 1);
 
-  for (let i = 0; i < numCurves; i++) {
-    let baseY = spacing * (i + 0.5); // 🔧 위쪽 라인이 너무 떠 보이지 않게 조절
-    let thickness = map(i, 0, numCurves - 1, 1.2, 0.4); // 선택적 조정
+  // 🔧 i = 1부터 시작해서 첫 번째 곡선 생략
+  for (let i = 1; i < numCurves; i++) {
+    let baseY = spacing * (i + 0.5); // 위치 살짝 내려서 자연스럽게
+    let thickness = map(i, 1, numCurves - 1, 1.2, 0.4);
 
     stroke(255, 60, 60, 120);
     strokeWeight(thickness);
@@ -176,6 +177,7 @@ function drawDynamicCurve() {
     endShape();
   }
 }
+
 
 
 
