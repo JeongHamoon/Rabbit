@@ -14,14 +14,26 @@ function preload() {
 
 function setup() {
   let fixedW = 1440;
-  let fixedH = 1024;
+  let fixedH = 1040;
 
-  // 화면이 너무 작을 경우에만 줄여서 생성
   let actualW = windowWidth < fixedW ? windowWidth : fixedW;
   let actualH = windowHeight < fixedH ? windowHeight : fixedH;
 
   createCanvas(actualW, actualH);
+  imageMode(CENTER);
+
+  // ⬇️ 여기에 반드시 다시 초기화
+  wavePoints = [];
+  for (let x = 0; x <= actualW; x += 60) {
+    wavePoints.push({ x: x, y: actualH * 0.8 });
+  }
+
+  dynamicCurvePoints = [];
+  for (let i = 0; i < actualW; i += 40) {
+    dynamicCurvePoints.push({ x: i, y: actualH / 2 });
+  }
 }
+
 
 
 
