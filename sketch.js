@@ -16,19 +16,17 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
 
-  // 양 끝 여유를 줌 (왼쪽 -40, 오른쪽 +40 쯤)
-  let startX = -40;
-  let endX = width + 40;
-  dynamicCurvePoints = [];
-  for (let x = startX; x <= endX; x += 40) {
-    dynamicCurvePoints.push({ x: x, y: height / 2 });
-  }
-
   wavePoints = [];
   for (let x = 0; x <= width; x += 60) {
     wavePoints.push({ x: x, y: height * 0.8 });
   }
+
+  dynamicCurvePoints = [];
+  for (let i = 0; i < width; i += 40) {
+    dynamicCurvePoints.push({ x: i, y: height / 2 });
+  }
 }
+
 
 
 function windowResized() {
@@ -168,8 +166,8 @@ function drawDynamicCurve() {
     beginShape();
     for (let pt of dynamicCurvePoints) {
       let d = dist(mouseX, mouseY, pt.x, baseY);
-      let wave = sin(frameCount * 0.05 + pt.x * 0.01 + i * 0.2) * 10;
       let offsetY = map(d, 0, 300, -40, 40);
+      let wave = sin(frameCount * 0.05 + pt.x * 0.01 + i * 0.1) * 10;
       let targetY = baseY + offsetY + wave;
       pt.y = lerp(pt.y, targetY, 0.1);
       curveVertex(pt.x, pt.y);
@@ -177,6 +175,7 @@ function drawDynamicCurve() {
     endShape();
   }
 }
+
 
 
 
