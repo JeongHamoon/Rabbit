@@ -159,31 +159,33 @@ function drawDynamicCurve() {
 
     beginShape();
 
-    // 🎯 양끝 점 추가 (보조점 + 고정)
-    let firstX = -40; // 화면 왼쪽 바깥쪽 (장력 느낌)
-    let lastX = width + 40; // 오른쪽 바깥쪽
-
+    // 시작점
+    let firstX = dynamicCurvePoints[0].x;
     let firstY = baseY;
-    let lastY = baseY;
-
-    curveVertex(firstX, firstY); // 보조점
-    curveVertex(0, firstY);      // 시작점
+    curveVertex(firstX, firstY);
+    curveVertex(firstX, firstY);
 
     for (let pt of dynamicCurvePoints) {
       let d = dist(mouseX, mouseY, pt.x, baseY);
-      let offsetY = map(d, 0, 300, -40, 40);
-      let wave = sin(frameCount * 0.05 + pt.x * 0.01 + i * 0.1) * 10;
+      let edgeFalloff = map(pt.x, 0, width, 0.2, 1);  // 양끝은 덜 흔들림
+      let offsetY = map(d, 0, 300, -40, 40) * edgeFalloff;
+      let wave = sin(frameCount * 0.05 + pt.x * 0.01 + i * 0.1) * 10 * edgeFalloff;
       let targetY = baseY + offsetY + wave;
-      pt.y = lerp(pt.y, targetY, 0.1);
+
+      pt.y = lerp(pt.y, targetY, 0.05 + edgeFalloff * 0.1);
       curveVertex(pt.x, pt.y);
     }
 
-    curveVertex(width, lastY);   // 끝점
-    curveVertex(lastX, lastY);   // 보조점
+    // 끝점
+    let lastX = dynamicCurvePoints[dynamicCurvePoints.length - 1].x;
+    let lastY = baseY;
+    curveVertex(lastX, lastY);
+    curveVertex(lastX, lastY);
 
     endShape();
   }
 }
+
 
 function drawRipples() {
   noFill();
