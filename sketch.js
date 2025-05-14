@@ -150,38 +150,32 @@ function drawDynamicCurve() {
 
   for (let i = 0; i < numCurves; i++) {
     let baseY = spacing * (i + 1);
-    if (i === 0) baseY += 80;
-    let offsetY = i === 0
-    ? map(d, 0, 300, -5, 5)
-    : map(d, 0, 300, -40, 40);
     let thickness = map(i, 0, numCurves - 1, 1.2, 0.4);
 
-    stroke(255, 60, 60, 120);
+    stroke(255, 60, 60, 120); // 곡선 색상 및 투명도
     strokeWeight(thickness);
 
     beginShape();
 
-    // ✅ 왼쪽 보조점 (양쪽 curveVertex가 꼭 두 번 필요함!)
+    // 왼쪽 보조점
     let first = dynamicCurvePoints[0];
-    curveVertex(first.x - 40, first.y); // 왼쪽 밖으로 하나 더
-    curveVertex(first.x, first.y);
+    curveVertex(first.x - 40, baseY);
+    curveVertex(first.x, baseY);
 
+    // 곡선 포인트
     for (let pt of dynamicCurvePoints) {
-      let d = dist(mouseX, mouseY, pt.x, baseY);
-      let offsetY = map(d, 0, 300, -40, 40);
-      let wave = sin(frameCount * 0.05 + pt.x * 0.01 + i * 0.1) * 10;
-      let targetY = baseY + offsetY + wave;
-      curveVertex(pt.x, targetY);
+      curveVertex(pt.x, baseY);
     }
 
-    // ✅ 오른쪽 보조점
+    // 오른쪽 보조점
     let last = dynamicCurvePoints[dynamicCurvePoints.length - 1];
-    curveVertex(last.x, last.y);
-    curveVertex(last.x + 40, last.y); // 오른쪽 밖으로 하나 더
+    curveVertex(last.x, baseY);
+    curveVertex(last.x + 40, baseY);
 
     endShape();
   }
 }
+
 
 
 
