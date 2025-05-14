@@ -197,7 +197,7 @@ function drawClockHands(x, y, radius) {
   stroke(255, 100, 100);
   strokeWeight(2);
   const sAngle = map(sc, 0, 60, 0, TWO_PI) - HALF_PI;
-  line(0, 0, cos(sAngle) * radius * 0.9, sin(sAngle) * radius * 0.9);
+  line(0, 0, cos(sAngle) * radius * 0.8, sin(sAngle) * radius * 0.9);
 
   pop();
 }
