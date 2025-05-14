@@ -25,8 +25,6 @@ function setup() {
 
 
 
-}
-
 
 function draw() {
   drawDynamicCurve(); // ✅ 반드시 draw() 함수 내부에 있어야 화면에 나타남
