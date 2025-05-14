@@ -149,20 +149,17 @@ function drawDynamicCurve() {
   let spacing = height / (numCurves + 1);
 
   for (let i = 0; i < numCurves; i++) {
-    let baseY = spacing * (i + 1);
-    let thickness = map(i, 0, numCurves - 1, 1.5, 0.2);
+    let baseY = spacing * (i + 0.5); // 🔧 위쪽 라인이 너무 떠 보이지 않게 조절
+    let thickness = map(i, 0, numCurves - 1, 1.2, 0.4); // 선택적 조정
 
     stroke(255, 60, 60, 120);
     strokeWeight(thickness);
 
     beginShape();
-
-    // 왼쪽 보조점 2개
     let first = dynamicCurvePoints[0];
-      curveVertex(first.x, first.y);
-      curveVertex(first.x, first.y);
+    curveVertex(first.x, first.y);
+    curveVertex(first.x, first.y);
 
-    // 메인 곡선
     for (let pt of dynamicCurvePoints) {
       let d = dist(mouseX, mouseY, pt.x, baseY);
       let offsetY = map(d, 0, 300, -40, 40);
@@ -172,7 +169,6 @@ function drawDynamicCurve() {
       curveVertex(pt.x, pt.y);
     }
 
-    // 오른쪽 보조점 2개
     let last = dynamicCurvePoints[dynamicCurvePoints.length - 1];
     curveVertex(last.x, last.y);
     curveVertex(last.x, last.y);
@@ -180,6 +176,7 @@ function drawDynamicCurve() {
     endShape();
   }
 }
+
 
 
 
