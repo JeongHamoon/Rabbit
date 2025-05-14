@@ -158,11 +158,17 @@ function drawDynamicCurve() {
     strokeWeight(thickness);
 
     beginShape();
-    let firstY = dynamicCurvePoints[0]?.y || baseY;
-    curveVertex(0, firstY);
-    curveVertex(0, firstY);
-  
-    
+
+    // 🎯 양끝 점 추가 (보조점 + 고정)
+    let firstX = -40; // 화면 왼쪽 바깥쪽 (장력 느낌)
+    let lastX = width + 40; // 오른쪽 바깥쪽
+
+    let firstY = baseY;
+    let lastY = baseY;
+
+    curveVertex(firstX, firstY); // 보조점
+    curveVertex(0, firstY);      // 시작점
+
     for (let pt of dynamicCurvePoints) {
       let d = dist(mouseX, mouseY, pt.x, baseY);
       let offsetY = map(d, 0, 300, -40, 40);
@@ -171,9 +177,9 @@ function drawDynamicCurve() {
       pt.y = lerp(pt.y, targetY, 0.1);
       curveVertex(pt.x, pt.y);
     }
-    let lastY = dynamicCurvePoints[dynamicCurvePoints.length - 1]?.y || baseY;
-    curveVertex(width, lastY);
-    curveVertex(width, lastY);
+
+    curveVertex(width, lastY);   // 끝점
+    curveVertex(lastX, lastY);   // 보조점
 
     endShape();
   }
