@@ -17,9 +17,10 @@ function setup() {
   imageMode(CENTER);
 
   dynamicCurvePoints = [];
-  for (let x = -200; x <= width + 200; x += 40) {
+  for (let x = -width; x <= width * 2; x += 40) {
     dynamicCurvePoints.push({ x: x, y: height / 2 });
   }
+
 
   wavePoints = [];
   for (let x = 0; x <= width; x += 60) {
@@ -36,9 +37,10 @@ function windowResized() {
   }
 
   dynamicCurvePoints = [];
-  for (let x = -200; x <= width + 200; x += 40) {
+    for (let x = -width; x <= width * 2; x += 40) {
     dynamicCurvePoints.push({ x: x, y: height / 2 });
   }
+
 }
 
 function draw() {
