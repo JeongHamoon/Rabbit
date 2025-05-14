@@ -148,17 +148,18 @@ function drawDynamicCurve() {
   let numCurves = 12;
   let spacing = height / (numCurves + 1);
 
-  // i = 2부터 시작 (완전히 첫 곡선 생략)
-  for (let i = 2; i < numCurves; i++) {
-    let baseY = spacing * (i + 1); // 그대로 유지
-    let thickness = map(i, 2, numCurves - 1, 1.2, 0.4);
+  for (let i = 0; i < numCurves; i++) {
+    let baseY = spacing * (i + 1);
+    let thickness = map(i, 0, numCurves - 1, 1.2, 0.4);
 
     stroke(255, 60, 60, 120);
     strokeWeight(thickness);
 
     beginShape();
+
+    // ✅ 왼쪽 보조점 (양쪽 curveVertex가 꼭 두 번 필요함!)
     let first = dynamicCurvePoints[0];
-    curveVertex(first.x, first.y);
+    curveVertex(first.x - 40, first.y); // 왼쪽 밖으로 하나 더
     curveVertex(first.x, first.y);
 
     for (let pt of dynamicCurvePoints) {
@@ -170,9 +171,10 @@ function drawDynamicCurve() {
       curveVertex(pt.x, pt.y);
     }
 
+    // ✅ 오른쪽 보조점
     let last = dynamicCurvePoints[dynamicCurvePoints.length - 1];
     curveVertex(last.x, last.y);
-    curveVertex(last.x, last.y);
+    curveVertex(last.x + 40, last.y); // 오른쪽 밖으로 하나 더
 
     endShape();
   }
@@ -215,12 +217,12 @@ function drawClockHands(x, y, radius) {
   push();
   translate(x, y);
 
-  stroke(200, 0, 0);
+  stroke(0, 0, 0);
   strokeWeight(6);
   const hAngle = map(hr + mn / 60, 0, 12, 0, TWO_PI) - HALF_PI;
   line(0, 0, cos(hAngle) * radius * 0.5, sin(hAngle) * radius * 0.5);
   
-  stroke(200, 0, 0);
+  stroke(0, 0, 0);
   strokeWeight(4);
   const mAngle = map(mn + sc / 60, 0, 60, 0, TWO_PI) - HALF_PI;
   line(0, 0, cos(mAngle) * radius * 0.8, sin(mAngle) * radius * 0.8);
