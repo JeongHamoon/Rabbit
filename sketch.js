@@ -191,7 +191,6 @@ function drawDynamicCurve() {
     : map(d, 0, 300, -40, 40);
   let wave = sin(frameCount * 0.05 + pt.x * 0.01 + i * 0.1) * 10;
   let targetY = baseY + offsetY + wave;
-  pt.y = lerp(pt.y, targetY, 0.1);
   curveVertex(pt.x, pt.y);
 }
 
