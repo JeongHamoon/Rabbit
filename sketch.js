@@ -100,7 +100,6 @@ function draw() {
     currentGif = surprisedGif;
   }
   
-  let gifSize = min(width * 0.5, height * 0.5); // 비율 유지 (모바일도!)
   image(currentGif, imgX, imgY, gifSize, gifSize); // 반응형으로 출력
 
 
