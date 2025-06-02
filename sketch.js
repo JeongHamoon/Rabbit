@@ -76,7 +76,7 @@ function draw() {
   drawLightGrid(); // 🔴 마우스 반응 빛 배경
   drawResponsiveCurve(); // 💫 부드러운 배경 곡선
   tint(255, 40); // 투명도 조절 (0~255)
-  image(bgImg, width / 2, height / 2,1440, 1024);
+  image(bgImg, width / 2, height / 2, width, height); // ✅ canvas 크기에 맞춤
   noTint(); // 이후 이미지에는 영향 없도록 초기화
   function drawGlow() {
   push();
@@ -100,7 +100,9 @@ function draw() {
     currentGif = surprisedGif;
   }
   
-  image(currentGif, imgX, imgY); // 최종 출력
+  let gifSize = min(width * 0.5, height * 0.5); // 비율 유지 (모바일도!)
+  image(currentGif, imgX, imgY, gifSize, gifSize); // 반응형으로 출력
+
 
   // 눈 좌표 설정
   eyeL.x = imgX + -10;
