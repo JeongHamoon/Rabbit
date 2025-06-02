@@ -71,12 +71,23 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight); // ✅ 창 크기 변화에 따라 canvas 재조정
 }
 function draw() {
+  // ✅ 캔버스 채우기 배경 이미지 (cover 방식!)
+  let canvasAspect = width / height;
+  let imgAspect = bgImg.width / bgImg.height;
+  let w, h;
+  if (canvasAspect > imgAspect) {
+    w = width;
+    h = width / imgAspect;
+  } else {
+    h = height;
+    w = height * imgAspect;
+  }
+  image(bgImg, width / 2, height / 2, w, h);
   drawDynamicCurve(); // ✅ 반드시 draw() 함수 내부에 있어야 화면에 나타남
   drawRipples();
   drawLightGrid(); // 🔴 마우스 반응 빛 배경
   drawResponsiveCurve(); // 💫 부드러운 배경 곡선
   tint(255, 40); // 투명도 조절 (0~255)
-  image(bgImg, width / 2, height / 2, width, height); // ✅ canvas 크기에 맞춤
   noTint(); // 이후 이미지에는 영향 없도록 초기화
   function drawGlow() {
   push();
@@ -100,7 +111,8 @@ function draw() {
     currentGif = surprisedGif;
   }
   
-   image(currentGif, imgX, imgY); // 최종 출력
+    let gifSize = min(width * 0.6, height * 0.6); // 🟩 더 큼!
+  image(currentGif, imgX, imgY, gifSize, gifSize);
 
 
   // 눈 좌표 설정
