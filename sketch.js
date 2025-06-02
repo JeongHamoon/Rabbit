@@ -59,14 +59,16 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1440, 1040);
+  createCanvas(windowWidth, windowHeight); // ✅ 전체 뷰포트로 꽉 채우기!
   imageMode(CENTER);
   for (let x = 0; x <= width; x += 60) {
   wavePoints.push({ x: x, y: height * 0.8 });}
   for (let i = 0; i < width; i += 40) {
     dynamicCurvePoints.push({ x: i, y: height / 2 });
   }
-
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight); // ✅ 창 크기 변화에 따라 canvas 재조정
+}
 }
 
 function draw() {
