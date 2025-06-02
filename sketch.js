@@ -66,11 +66,10 @@ function setup() {
   for (let i = 0; i < width; i += 40) {
     dynamicCurvePoints.push({ x: i, y: height / 2 });
   }
+}
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight); // ✅ 창 크기 변화에 따라 canvas 재조정
 }
-}
-
 function draw() {
   drawDynamicCurve(); // ✅ 반드시 draw() 함수 내부에 있어야 화면에 나타남
   drawRipples();
