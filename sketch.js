@@ -100,7 +100,7 @@ function draw() {
     currentGif = surprisedGif;
   }
   
-  image(currentGif, imgX, imgY, gifSize, gifSize); // 반응형으로 출력
+   image(currentGif, imgX, imgY); // 최종 출력
 
 
   // 눈 좌표 설정
