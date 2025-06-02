@@ -112,7 +112,7 @@ function draw() {
   }
   
     let gifSize = min(width * 0.6, height * 0.6); // 🟩 더 큼!
-  image(currentGif, imgX, imgY, gifSize, gifSize);
+ image(currentGif, imgX, imgY);
 
 
   // 눈 좌표 설정
