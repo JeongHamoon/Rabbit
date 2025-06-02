@@ -71,7 +71,12 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight); // ✅ 창 크기 변화에 따라 canvas 재조정
 }
 function draw() {
-  // ✅ 캔버스 채우기 배경 이미지 (cover 방식!)
+  // Cargo가 window 크기를 제대로 못 읽으면, 강제로 resize
+  if (width !== windowWidth || height !== windowHeight) {
+    resizeCanvas(windowWidth, windowHeight);
+  }
+
+  // 배경 (cover)
   let canvasAspect = width / height;
   let imgAspect = bgImg.width / bgImg.height;
   let w, h;
@@ -83,6 +88,14 @@ function draw() {
     w = height * imgAspect;
   }
   image(bgImg, width / 2, height / 2, w, h);
+
+  // GIF (원본 크기 출력)
+  let imgX = width / 2;
+  let imgY = height / 2;
+  let currentGif = (emotion === "happy") ? happyGif :
+                    (emotion === "surprised") ? surprisedGif :
+                    rabbitGif;
+  image(currentGif, imgX, imgY);
   drawDynamicCurve(); // ✅ 반드시 draw() 함수 내부에 있어야 화면에 나타남
   drawRipples();
   drawLightGrid(); // 🔴 마우스 반응 빛 배경
@@ -98,23 +111,6 @@ function draw() {
   }
   pop();
   }
-  
-
-  // 로고 위치
-  let imgX = width / 2;
-  let imgY = height / 2;
-  
-    let currentGif = rabbitGif; // 기본 Normal
-  if (emotion === "happy") {
-    currentGif = happyGif;
-  } else if (emotion === "surprised") {
-    currentGif = surprisedGif;
-  }
-  
-    let gifSize = min(width * 0.6, height * 0.6); // 🟩 더 큼!
- image(currentGif, imgX, imgY);
-
-
   // 눈 좌표 설정
   eyeL.x = imgX + -10;
   eyeL.y = imgY - 140;
@@ -220,9 +216,6 @@ function drawSpeechBubble(x, y, txt) {
   pop();
 
 }
-
-
-
 
 let dancheongColors = ['#b22222', '#7A140F', '#000000'];
 
